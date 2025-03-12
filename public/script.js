@@ -31,3 +31,12 @@ document.addEventListener('DOMContentLoaded', () => {
   console.log('DOM loaded');
   loadTopDevelopers();
 });
+// Kode untuk tombol Back (tambahkan di akhir script.js)
+document.addEventListener('DOMContentLoaded', () => {
+  const backButton = document.getElementById('back-to-mastermind');
+  if (backButton) {
+    backButton.addEventListener('click', () => {
+      window.location.href = 'https://nft-main-bice.vercel.app';
+    });
+  }
+});
