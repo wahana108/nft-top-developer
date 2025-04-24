@@ -4,20 +4,14 @@ const path = require('path');
 const app = express();
 const port = process.env.PORT || 3003;
 
-const supabaseUrl = 'https://jmqwuaybvruzxddsppdh.supabase.co';
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImptcXd1YXlidnJ1enhkZHNwcGRoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDA0MTUxNzEsImV4cCI6MjA1NTk5MTE3MX0.ldNdOrsb4BWyFRwZUqIFEbmU0SgzJxiF_Z7eGZPKZJg';
-const supabase = createClient(supabaseUrl, supabaseKey);
+const supabaseUrl = 'https://oqquvpjikdbjlagdlbhp.supabase.co';
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9xcXV2cGppa2RiamxhZ2RsYmhwIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc0NDk1MTgwOCwiZXhwIjoyMDYwNTI3ODA4fQ.cJri-wLQcDod3J49fUKesAY2cnghU3jtlD4BiuYMelw'; // Ganti dengan service_role key dari Supabase Dashboard
+const supabase = createClient(supabaseUrl, supabaseKey, {
+  auth: { autoRefreshToken: false, persistSession: false }
+});
 
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
-
-const authenticate = async (req, res, next) => {
-  const token = req.headers.authorization;
-  const { data: { user }, error } = await supabase.auth.getUser(token);
-  if (error || !user) return res.status(401).send('Unauthorized');
-  req.user = user;
-  next();
-};
 
 app.get('/top-developers', async (req, res) => {
   try {
@@ -35,7 +29,7 @@ app.get('/top-developers', async (req, res) => {
         .select('description')
         .eq('vendor_id', vendor.vendor_id)
         .limit(1)
-        .single();
+        .maybeSingle();
       const email = nftData?.description ? nftData.description.split(' | ').pop() : vendor.vendor_id;
       return { vendor_id: vendor.vendor_id, score: vendor.score, email };
     }));
@@ -47,8 +41,8 @@ app.get('/top-developers', async (req, res) => {
   }
 });
 
-
 app.get('/', (req, res) => {
+  console.log('Serving index.html from public');
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
