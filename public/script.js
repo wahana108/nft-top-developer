@@ -1,5 +1,5 @@
 console.log('script.js loaded');
-const supabase = window.supabase.createClient('https://jmqwuaybvruzxddsppdh.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImptcXd1YXlidnJ1enhkZHNwcGRoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDA0MTUxNzEsImV4cCI6MjA1NTk5MTE3MX0.ldNdOrsb4BWyFRwZUqIFEbmU0SgzJxiF_Z7eGZPKZJg');
+const supabase = window.supabase.createClient('https://oqquvpjikdbjlagdlbhp.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9xcXV2cGppa2RiamxhZ2RsYmhwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQ5NTE4MDgsImV4cCI6MjA2MDUyNzgwOH0.ec28Q9VqiW2FomXESxVkiYswtWe6kJS-Vpc7W_tMsuU'); // Ganti dengan anon key dari Supabase Dashboard
 
 async function loadTopDevelopers() {
   try {
@@ -16,7 +16,7 @@ async function loadTopDevelopers() {
       developers.forEach(dev => {
         const div = document.createElement('div');
         div.innerHTML = `
-          <p>Vendor ID: ${dev.vendor_id} | Email: ${dev.email} | Score: ${dev.score}</p>
+          <p>Email: ${dev.email} | Score: ${dev.score}</p>
         `;
         list.appendChild(div);
       });
@@ -30,9 +30,6 @@ async function loadTopDevelopers() {
 document.addEventListener('DOMContentLoaded', () => {
   console.log('DOM loaded');
   loadTopDevelopers();
-});
-// Kode untuk tombol Back (tambahkan di akhir script.js)
-document.addEventListener('DOMContentLoaded', () => {
   const backButton = document.getElementById('back-to-mastermind');
   if (backButton) {
     backButton.addEventListener('click', () => {
